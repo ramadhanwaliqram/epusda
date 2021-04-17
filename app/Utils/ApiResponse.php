@@ -1,11 +1,10 @@
 <?php
 namespace App\Utils;
 
-class ApiResponse {
-    public static function validationError($errors)
-    {
+class ApiResponse{
+    public static function validationError($errors){
         $newErrors = [];
-        foreach($errors->toArray() as $field => $msg) {
+        foreach($errors->toArray() as $field => $msg){
             $newErrors[$field] = $msg[0];
         }
 
@@ -16,14 +15,14 @@ class ApiResponse {
         ];
     }
 
-    public static function error($message) {
+    public static function error($message){
         return [
             'status' => 'error',
             'message' => $message
         ];
     }
 
-    public static function success($data, $message = "") {
+    public static function success($data, $message = ""){
         return [
             'status' => 'success',
             'message' => $message,
