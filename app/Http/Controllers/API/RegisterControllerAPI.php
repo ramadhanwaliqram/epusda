@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Utils\ApiResponse;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 
 class RegisterControllerAPI extends Controller
 {
@@ -74,6 +76,7 @@ class RegisterControllerAPI extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
     }
 
     public function addUser(Request $request)
@@ -87,13 +90,16 @@ class RegisterControllerAPI extends Controller
         ];
 
         $data = $request->all();
+        // dd($data);
+        
+        event(new Registered($user = $this->create($data)));
+        // $user = User::create([
+        //     'name' => $data['name'],
+        //     'no_phone' => $data['no_phone'],
+        //     'email' => $data['email'],
+        //     'password' => Hash::make($data['password']),
+        // ]);
 
-        $user = User::create([
-            'name' => $data['name'],
-            'no_phone' => $data['no_phone'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
 
         return response()->json(ApiResponse::success($user, 'Success add data'));
     }

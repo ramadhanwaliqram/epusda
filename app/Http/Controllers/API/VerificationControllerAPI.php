@@ -1,50 +1,72 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\Auth;
 
-use App\ApiCode;
-use App\User;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Verified;
 
-class VerificationController extends Controller {
+class VerificationControllerAPI extends Controller
+{
+    use VerifiesEmails;
 
-    public function __construct() {
-        $this->middleware('auth:api')->except(['verify']);
+    /**
+     * Show the email verification notice.
+     *
+     */
+    public function show()
+    {
+        //
     }
 
     /**
-     * Verify email
+     * Mark the authenticated user's email address as verified.
      *
-     * @param $user_id
-     * @param Request $request
-     * @return \Illuminate\Http\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function verify($user_id, Request $request) {
-        if (! $request->hasValidSignature()) {
-            return $this->respondUnAuthorizedRequest(ApiCode::INVALID_EMAIL_VERIFICATION_URL);
+    public function verify(Request $request)
+    {
+        // ->route('id') gets route user id and getKey() gets current user id() 
+        // do not forget that you must send Authorization header to get the user from the request
+        if ($request->route('id') == $request->user()->getKey() &&
+            $request->user()->markEmailAsVerified()) {
+            event(new Verified($request->user()));
         }
 
-        $user = User::findOrFail($user_id);
-
-        if (!$user->hasVerifiedEmail()) {
-            $user->markEmailAsVerified();
-        }
-
-        return redirect()->to('/');
+        return response()->json('Email verified!');
+//        return redirect($this->redirectPath());
     }
 
     /**
-     * Resend email verification link
+     * Resend the email verification notification.
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
-    public function resend() {
-        if (auth()->user()->hasVerifiedEmail()) {
-            return $this->respondBadRequest(ApiCode::EMAIL_ALREADY_VERIFIED);
+    public function resend(Request $request)
+    {
+        if ($request->user()->hasVerifiedEmail()) {
+            return response()->json('User already have verified email!', 422);
+//            return redirect($this->redirectPath());
         }
 
-        auth()->user()->sendEmailVerificationNotification();
+        $request->user()->sendEmailVerificationNotification();
 
-        return $this->respondWithMessage("Email verification link sent on your email id");
+        return response()->json('The notification has been resubmitted');
+//        return back()->with('resent', true);
+    }
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('signed')->only('verify');
+        $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
 }
