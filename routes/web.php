@@ -11,21 +11,6 @@
 |
 */
 
-Route::get('/migrate', function () {
-    Artisan::call('migrate');
-    return "Artisan success";
-});
-
-Route::get('/migrate-fresh', function () {
-    Artisan::call('migrate:fresh');
-    return "Artisan success";
-});
-
-Route::get('/db-seed', function () {
-    Artisan::call('db:seed');
-    return "Artisan success";
-});
-
 Route::get('/', function () {
     return view('welcome');
 });
