@@ -10,4 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    public function respond($data, $msg = null) {
+        return ResponseBuilder::asSuccess()->withData($data)->withMessage($msg)->build();
+    }
 }

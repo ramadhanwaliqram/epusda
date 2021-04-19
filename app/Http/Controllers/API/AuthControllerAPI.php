@@ -27,11 +27,14 @@ class AuthControllerAPI extends Controller
             return response()->json(ApiResponse::validationError($validator->errors()));
         }
 
-        if (!Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+        $fieldType = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'no_phone';
+        // dd($fieldType);
+
+        if (!Auth::attempt([$fieldType => $data['email'], 'password' => $data['password']])) {
             return response()->json(ApiResponse::error('email dan password tidak ditemukan/sesuai'));
         }
 
-        $user = User::where('email', $data['email'])->first();
+        $user = Auth::user();
 
         return response()->json(ApiResponse::success($user));
     }

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\API\Auth;
+namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Verified;
+use App\User;
 
 class VerificationControllerAPI extends Controller
 {
@@ -47,15 +48,16 @@ class VerificationControllerAPI extends Controller
      */
     public function resend(Request $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
+        $user = User::where('email', $request->email)->first();
+        // dd($user);
+
+        if($user->hasVerifiedEmail()) {
             return response()->json('User already have verified email!', 422);
-//            return redirect($this->redirectPath());
         }
 
-        $request->user()->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
 
         return response()->json('The notification has been resubmitted');
-//        return back()->with('resent', true);
     }
 
     /**
@@ -65,7 +67,7 @@ class VerificationControllerAPI extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
