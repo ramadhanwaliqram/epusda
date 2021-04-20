@@ -90,6 +90,7 @@ class RegisterControllerAPI extends Controller
         ];
 
         $data = $request->all();
+        dd($data);
         // dd($data);
         
         event(new Registered($user = $this->create($data)));
