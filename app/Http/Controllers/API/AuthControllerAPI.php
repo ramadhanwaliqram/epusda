@@ -35,6 +35,12 @@ class AuthControllerAPI extends Controller
         }
 
         $user = Auth::user();
+        
+        if ($user->status != 'activated') {
+            $user->sendEmailVerificationNotification();
+            
+            return response()->json(ApiResponse::error('silahkan verifikasi email untuk bisa login'));
+        }
 
         return response()->json(ApiResponse::success($user));
     }
