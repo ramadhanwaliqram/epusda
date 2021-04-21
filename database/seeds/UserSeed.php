@@ -26,7 +26,8 @@ class UserSeed extends Seeder
             'password'          => bcrypt('superadmin'),
             'no_phone'          => '081234567890',
             'email_verified_at' => '2020-04-04',
-            'role_id'           => 1
+            'role_id'           => 1,
+            'status'            => 'activated'
         ]);
 
         $users = User::create([
@@ -35,7 +36,8 @@ class UserSeed extends Seeder
             'password'          => bcrypt('user'),
             'no_phone'          => '081234567891',
             'email_verified_at' => '2020-04-04',
-            'role_id'           => 2
+            'role_id'           => 2,
+            'status'            => 'activated'
         ]);
 
 

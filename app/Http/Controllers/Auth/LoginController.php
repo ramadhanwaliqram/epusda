@@ -29,7 +29,7 @@ class LoginController extends Controller
      */
     public function redirectTo() {
         if (Auth::user()->hasRole('user')) {
-            $this->redirectTo = route('user.index');
+            $this->redirectTo = route('home');
             return $this->redirectTo;
         } else if (Auth::user()->hasRole('superadmin')) {
             $this->redirectTo = route('superadmin.index');
@@ -39,6 +39,8 @@ class LoginController extends Controller
             return $this->redirectTo;
         }
     }
+
+    // protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
      * Create a new controller instance.

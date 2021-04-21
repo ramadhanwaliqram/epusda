@@ -22,14 +22,3 @@ Route::post('register', 'API\RegisterControllerAPI@addUser');
 
 Route::get('email/verify/{id}', 'API\VerificationControllerAPI@verify')->name('verification.verify');
 Route::post('email/resend', 'API\VerificationControllerAPI@resend')->name('verification.resend');
-
-// Route::get('email/resend', function(Request $request)
-// {
-//     if ($request->user()->hasVerifiedEmail()) {
-//         return response()->json('User already have verified email!', 422);
-//     }
-
-//     $request->user()->sendEmailVerificationNotification();
-
-//     return response()->json('The notification has been resubmitted');
-// });

@@ -81,26 +81,20 @@ class RegisterControllerAPI extends Controller
 
     public function addUser(Request $request)
     {
-        $rules = [
-            'name' => ['required', 'string', 'max:255'],
-            'no_phone' => ['required', 'string', 'max:13'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'password_confirmation' => 'required|same:password',
-        ];
-
         $data = $request->all();
-        dd($data);
         // dd($data);
         
-        event(new Registered($user = $this->create($data)));
-        // $user = User::create([
-        //     'name' => $data['name'],
-        //     'no_phone' => $data['no_phone'],
-        //     'email' => $data['email'],
-        //     'password' => Hash::make($data['password']),
-        // ]);
-
+        // event(new Registered($user = $this->create($data = $request->all())));
+        event(new Registered(
+            $user = User::create([
+                'role_id' => $data['role_id'],
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'no_phone' => $data['no_phone'],
+            ]
+            )
+        ));
 
         return response()->json(ApiResponse::success($user, 'Success add data'));
     }
