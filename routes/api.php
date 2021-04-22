@@ -22,3 +22,6 @@ Route::post('register', 'API\RegisterControllerAPI@addUser');
 
 Route::get('email/verify/{id}', 'API\VerificationControllerAPI@verify')->name('verification.verify');
 Route::post('email/resend', 'API\VerificationControllerAPI@resend')->name('verification.resend');
+
+// Slider
+Route::get('slider', 'API\SliderControllerAPI@index');

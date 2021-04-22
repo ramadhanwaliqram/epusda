@@ -27,6 +27,16 @@ Route::namespace('Superadmin')
     ->group(function () {
         Route::get('/superadmin', 'SuperadminController@index')
             ->name('index');
+
+            // Slider
+            Route::get('/superadmin/slider/', 'SliderController@index')
+            ->name('slider');
+            Route::post('/superadmin/slider/', 'SliderController@store');
+            Route::get('/superadmin/slider/{id}', 'SliderController@edit');
+            Route::post('/superadmin/slider/update', 'SliderController@update')
+                ->name('slider.slider-update');
+            Route::get('/superadmin/slider/hapus/{id}', 'SliderController@destroy');
+
         
             // List User
             Route::get('/superadmin/list-user', 'ListUserController@index')

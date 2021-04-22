@@ -11,35 +11,12 @@
             </div>
             <div class="modal-body">
                 <form id="form-slider" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="judul">Judul</label>
                                 <input type="text" name="judul" id="judul" class="form-control form-control-sm">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="posisi">Kabupaten / Kota</label>
-                                <select name="kabupaten_kota" id="kabupaten_kota" class="form-control form-control-sm">
-                                    <option value="">Pilih</option>
-                                    <?php
-                                        foreach($cities as $city){
-                                    ?>
-                                        <option value="<?= $city->id ?>"><?= $city->name ?></option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="form-group">
-                                <label for="sekolah">Sekolah</label>
-                                <select name="sekolah[]" id="sekolah" class="form-control form-control-sm" multiple>
-                                    <option value="">-- Pilih Kabupaten Dahulu --</option>
-
-                                </select>
                             </div>
                         </div>
                     </div>
@@ -78,8 +55,8 @@
                     </div>
                     <div class="modal-footer">
                         <input type="hidden" name="hidden_id" id="hidden_id">
-                        <input type="hidden" id="action" value="add">
-                        <input type="submit" class="btn btn-sm btn-outline-success" value="Simpan" id="btn">
+                        <input type="hidden" id="action" val="add">
+                        <input type="submit" class="btn btn-sm btn-success" value="Simpan" id="btn">
                         <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal">Batal</button>
                     </div>
                 </form>
