@@ -35,17 +35,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php  $i = 1; ?>
+                                @php $i = 1 @endphp
                                 @foreach ($users as $user)
                                 <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->no_phone }}</td>
-                                <td>{{ $user->status }}</td>
-                                <td>
-                                    <button type="button" id="{{$user->id}}" class="edit btn btn-mini btn-info shadow-sm"><i class="fa fa-pencil-alt"></i></button>
-                                    &nbsp;
+                                @if ($user->status == 'pending')
+                                    <td class="text-center"><label class="badge badge-warning">{{ $user->status }}</label></td>
+                                @elseif($user->status == 'activated')
+                                    <td class="text-center"><label class="badge badge-success">{{ $user->status }}</label></td>
+                                @endif
+                                <td class="text-center">
+                                    {{-- <button type="button" id="{{$user->id}}" class="edit btn btn-mini btn-info shadow-sm"><i class="fa fa-pencil-alt"></i></button> --}}
                                     <button type="button" id="{{$user->id}}" class="delete btn btn-mini btn-danger shadow-sm"><i class='fa fa-trash'></i></button>
                                 </td>
                             </tr>
@@ -103,107 +106,6 @@
     <script>
         $(document).ready(function () {
             $('#order-table').DataTable();
-            // $('#order-table').DataTable({
-                // processing: true,
-                // serverSide: true,
-                // ajax: {
-                //     url: "{{ route('superadmin.list-user') }}",
-                // },
-                // columns: [
-                // {
-                //     data: 'DT_RowIndex',
-                //     name: 'DT_RowIndex'
-                // },
-                // {
-                //     data: 'name',
-                //     name: 'name'
-                // },
-                // {
-                //     data: 'action',
-                //     name: 'action'
-                // }
-                // ]
-            // });
-
-            $('#form-user').on('submit', function (e) {
-                if ($('#action').val() == 'add') {
-                    this.action = "{{ route('superadmin.list-user') }}";
-                    this.method = "POST";
-                    this.querySelector("input[name=_method]").value = "POST";
-                }
-
-                if ($('#action').val() == 'edit') {
-                    this.action = "{{ route('superadmin.list-user-update') }}";
-                    this.querySelector("input[name=_method]").value = "POST";
-                }
-                return;
-
-                $.ajax({
-                    url: url,
-                    method: 'POST',
-                    dataType: 'JSON',
-                    data: $(this).serialize(),
-                    success: function (data) {
-                        var html = '';
-                        if (data.errors) {
-                            for (var count = 0; count < data.errors.length; count++) {
-                                html = data.errors[count];
-                            }
-                            $('#sekolah').addClass('is-invalid');
-                            $('#id_sekolah').addClass('is-invalid');
-                            $('#name').addClass('is-invalid');
-                            $('#jenjang').addClass('is-invalid');
-                            $('#tahun_ajaran').addClass('is-invalid');
-                            $('#alamat').addClass('is-invalid');
-                            $('#provinsi').addClass('is-invalid');
-                            $('#kabupaten').addClass('is-invalid');
-                            $('#username').addClass('is-invalid');
-                            $('#password').addClass('is-invalid');
-                            toastr.error(html);
-                        }
-
-                        if (data.success) {
-                            toastr.success(data.success);
-                            $('#modal-sekolah').modal('hide');
-                            $('#id_sekolah').removeClass('is-invalid');
-                            $('#name').removeClass('is-invalid');
-                            $('#jenjang').removeClass('is-invalid');
-                            $('#tahun_ajaran').removeClass('is-invalid');
-                            $('#alamat').removeClass('is-invalid');
-                            $('#provinsi').removeClass('is-invalid');
-                            $('#kabupaten').removeClass('is-invalid');
-                            $('#username').removeClass('is-invalid');
-                            $('#password').removeClass('is-invalid');
-                            $('#form-sekolah')[0].reset();
-                            $('#action').val('add');
-                            $('#btn').removeClass('btn-outline-info').addClass('btn-outline-success').text('Simpan');
-                            $('#order-table').DataTable().ajax.reload();
-                        }
-                        $('#form_result').html(html);
-                    }
-                });
-            });
-
-            $(document).on('click', '.edit', function () {
-                var id = $(this).attr('id');
-                $.ajax({
-                    url: '/superadmin/list-user/'+id,
-                    dataType: 'JSON',
-                    success: function (data) {
-                        $('#action').val('edit');
-                        $('#btn').removeClass('btn-outline-success').addClass('btn-outline-info').text('Update');
-                        $('#id_sekolah').val(data.sekolah.id_sekolah);
-                        $('#name').val(data.sekolah.name);
-                        $('#jenjang').val(data.sekolah.jenjang);
-                        $('#tahun_ajaran').val(data.sekolah.tahun_ajaran);
-                        $('#alamat').val(data.sekolah.alamat);
-                        $('#hidden_id').val(data.sekolah.id);
-                        $('#username').val(data.user[0].username).attr('readonly', true);
-                        $('#password').val(data.user[0].password).attr('readonly', true);
-                        $('#modal-sekolah').modal('show');
-                    }
-                });
-            });
 
             var user_id;
             $(document).on('click', '.delete', function () {
@@ -220,7 +122,8 @@
                     }, success: function (data) {
                         setTimeout(function () {
                             $('#confirmModal').modal('hide');
-                            $('#order-table').DataTable().ajax.reload();
+                            location.reload();
+                            // $('#order-table').DataTable().ajax.reload();
                             toastr.success(data.success);
                         }, 1000);
                     }
