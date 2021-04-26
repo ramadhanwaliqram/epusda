@@ -19,6 +19,14 @@
                         <span class="pcoded-mtext">Slider</span>
                     </a>
                 </li>
+                <li class="{{ request()->is('superadmin/pengumuman') ? 'active' : '' }}">
+                    <a href="{{ route('superadmin.pengumuman.pengumuman') }}" class="waves-effect waves-dark">
+                       <span class="pcoded-micon">
+                           <i class="fa fa-bell"></i>
+                       </span>
+                       <span class="pcoded-mtext">Pengumuman</span>
+                   </a>
+                </li>
                 <li class="{{ request()->is('superadmin/list-user/list-user') ? 'active' : '' }}">
                     <a href="{{ route('superadmin.list-user') }}" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
@@ -27,7 +35,7 @@
                         <span class="pcoded-mtext">List user</span>
                     </a>
                 </li>
-                <li class="@if (request()->is('superadmin/library/tambah-baru') || request()->is('superadmin/library/setting')) pcoded-hasmenu active pcoded-trigger @else pcoded-hasmenu @endif">
+                {{-- <li class="@if (request()->is('superadmin/library/tambah-baru') || request()->is('superadmin/library/setting')) pcoded-hasmenu active pcoded-trigger @else pcoded-hasmenu @endif">
                     <a href="#" class="waves-effect waves-dark">
                         <span class="pcoded-micon">
                             <i class="fa fa-book"></i>
@@ -46,7 +54,7 @@
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

@@ -32,3 +32,6 @@ Route::post('add-borrow/{id}', 'API\LibraryController@addBorrow');
 
 // Like
 Route::post('like-library/{id}', 'API\LibraryController@like');
+
+//Message
+Route::get('message','API\MessageAPIController@getMessage');

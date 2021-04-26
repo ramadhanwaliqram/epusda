@@ -47,21 +47,33 @@ Route::namespace('Superadmin')
                 ->name('list-user-update');
             Route::get('/superadmin/list-user/hapus/{id}', 'ListUserController@destroy');
 
-        Route::namespace('Library')
-            ->group(function () {
-                Route::get('/superadmin/library/setting', 'SettingController@index')
-                    ->name('library.setting');
-                Route::post('/superadmin/library/setting/tipe', 'SettingController@tipeStore')
-                    ->name('library-tipe');
-                Route::get('/superadmin/library/setting/tipe/{id}', 'SettingController@editTipe');
-                Route::put('/superadmin/library/setting/tipe/update', 'SettingController@updateTipe')
-                    ->name('library-tipe-update');
-                Route::delete('/superadmin/library/tipe/delete/{id}', 'SettingController@deleteTipe')
-                    ->name('library-tipe-delete');
+        // Route::namespace('Library')
+        //     ->group(function () {
+        //         Route::get('/superadmin/library/setting', 'SettingController@index')
+        //             ->name('library.setting');
+        //         Route::post('/superadmin/library/setting/tipe', 'SettingController@tipeStore')
+        //             ->name('library-tipe');
+        //         Route::get('/superadmin/library/setting/tipe/{id}', 'SettingController@editTipe');
+        //         Route::put('/superadmin/library/setting/tipe/update', 'SettingController@updateTipe')
+        //             ->name('library-tipe-update');
+        //         Route::delete('/superadmin/library/tipe/delete/{id}', 'SettingController@deleteTipe')
+        //             ->name('library-tipe-delete');
 
-                Route::get('/superadmin/library/tambah-baru', 'TambahController@index')
-                    ->name('library.tambah-baru');
-        });
+        //         Route::get('/superadmin/library/tambah-baru', 'TambahController@index')
+        //             ->name('library.tambah-baru');
+        // });
+
+        // Pengumuman
+        Route::namespace('Pengumuman')
+            ->group(function () {
+            Route::get('/admin/pengumuman', 'PengumumanController@index')
+                ->name('pengumuman.pengumuman');
+            Route::post('/admin/pengumuman/pesan/add', 'PengumumanController@store')->name('pengumuman.pesan-add');
+            Route::get('/admin/pengumuman/pesan/{id}', 'PengumumanController@edit');
+            Route::post('/admin/pengumuman/pesan/update', 'PengumumanController@update')
+                ->name('pengumuman.pesan-update');
+            Route::get('/admin/pengumuman/pesan/hapus/{id}', 'PengumumanController@destroy');
+            });
 
     });
 
