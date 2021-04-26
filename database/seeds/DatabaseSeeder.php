@@ -18,8 +18,6 @@ class DatabaseSeeder extends Seeder
 			
         $this->call(RoleSeed::class);
         $this->call(UserSeed::class);
-		// $this->call('UsersTableSeeder');
-		// $this->call('PostsTableSeeder');
 
 		// supposed to only apply to a single connection and reset it's self
 		// but I like to explicitly undo what I've done for clarity
