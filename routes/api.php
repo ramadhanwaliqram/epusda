@@ -25,3 +25,10 @@ Route::post('email/resend', 'API\VerificationControllerAPI@resend')->name('verif
 
 // Slider
 Route::get('slider', 'API\SliderControllerAPI@index');
+
+// Borrow
+Route::get('get-borrow/{id}', 'API\LibraryController@getBorrow');
+Route::post('add-borrow/{id}', 'API\LibraryController@addBorrow');
+
+// Like
+Route::post('like-library/{id}', 'API\LibraryController@like');
