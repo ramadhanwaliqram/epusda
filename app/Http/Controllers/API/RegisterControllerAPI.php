@@ -82,9 +82,21 @@ class RegisterControllerAPI extends Controller
     public function addUser(Request $request)
     {
         $data = $request->all();
-        // dd($data);
+        $validator = Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'no_phone' => ['required', 'string', 'max:13'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6', 'confirmed'],
+            'password_confirmation' => 'required|same:password',
+        ]);
+
+        if ($validator->fails()) {
+            return response()
+                ->json([
+                    'errors' => $validator->errors()->all()
+                ]);
+        }
         
-        // event(new Registered($user = $this->create($data = $request->all())));
         event(new Registered(
             $user = User::create([
                 'role_id' => $data['role_id'],

@@ -103,20 +103,20 @@
             <div class="card-body">
                 <div class="row align-items-center">
                     <div class="col">
-                        <h6>Ebook</h6>
-                        <h5 class="m-b-30 f-w-700">{{ $ebook }}</h5>
+                        <h6>User</h6>
+                        <h5 class="m-b-30 f-w-700">{{ $user }}</h5>
                         <div class="progress">
                             <div class="progress-bar bg-c-red" style="width:100%"></div>
                         </div>
                     </div>
                     <div class="col-auto">
-                        <i class="fas fa-book bg-c-blue"></i>
+                        <i class="fas fa-users bg-c-blue"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    {{-- <div class="col-md-4">
         <div class="card comp-card">
             <div class="card-body">
                 <div class="row align-items-center">
@@ -151,7 +151,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 
 
