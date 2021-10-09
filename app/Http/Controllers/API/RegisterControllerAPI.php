@@ -76,7 +76,6 @@ class RegisterControllerAPI extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-
     }
 
     public function addUser(Request $request)
@@ -96,7 +95,7 @@ class RegisterControllerAPI extends Controller
                     'errors' => $validator->errors()->all()
                 ]);
         }
-        
+
         event(new Registered(
             $user = User::create([
                 'role_id' => $data['role_id'],
@@ -104,8 +103,7 @@ class RegisterControllerAPI extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'no_phone' => $data['no_phone'],
-            ]
-            )
+            ])
         ));
 
         return response()->json(ApiResponse::success($user, 'Success add data'));

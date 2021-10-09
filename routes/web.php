@@ -28,24 +28,24 @@ Route::namespace('Superadmin')
         Route::get('/superadmin', 'SuperadminController@index')
             ->name('index');
 
-            // Slider
-            Route::get('/superadmin/slider/', 'SliderController@index')
+        // Slider
+        Route::get('/superadmin/slider/', 'SliderController@index')
             ->name('slider');
-            Route::post('/superadmin/slider/', 'SliderController@store');
-            Route::get('/superadmin/slider/{id}', 'SliderController@edit');
-            Route::post('/superadmin/slider/update', 'SliderController@update')
-                ->name('slider.slider-update');
-            Route::get('/superadmin/slider/hapus/{id}', 'SliderController@destroy');
+        Route::post('/superadmin/slider/', 'SliderController@store');
+        Route::get('/superadmin/slider/{id}', 'SliderController@edit');
+        Route::post('/superadmin/slider/update', 'SliderController@update')
+            ->name('slider.slider-update');
+        Route::get('/superadmin/slider/hapus/{id}', 'SliderController@destroy');
 
-        
-            // List User
-            Route::get('/superadmin/list-user', 'ListUserController@index')
-                ->name('list-user');
-            Route::post('/superadmin/list-user', 'ListUserController@store');
-            Route::get('/superadmin/list-user/{id}', 'ListUserController@edit');
-            Route::post('/superadmin/list-user/update', 'ListUserController@update')
-                ->name('list-user-update');
-            Route::get('/superadmin/list-user/hapus/{id}', 'ListUserController@destroy');
+
+        // List User
+        Route::get('/superadmin/list-user', 'ListUserController@index')
+            ->name('list-user');
+        Route::post('/superadmin/list-user', 'ListUserController@store');
+        Route::get('/superadmin/list-user/{id}', 'ListUserController@edit');
+        Route::post('/superadmin/list-user/update', 'ListUserController@update')
+            ->name('list-user-update');
+        Route::get('/superadmin/list-user/hapus/{id}', 'ListUserController@destroy');
 
         // Route::namespace('Library')
         //     ->group(function () {
@@ -66,18 +66,18 @@ Route::namespace('Superadmin')
         // Pengumuman
         Route::namespace('Pengumuman')
             ->group(function () {
-            Route::get('/admin/pengumuman', 'PengumumanController@index')
-                ->name('pengumuman.pengumuman');
-            Route::post('/admin/pengumuman/pesan/add', 'PengumumanController@store')->name('pengumuman.pesan-add');
-            Route::get('/admin/pengumuman/pesan/{id}', 'PengumumanController@edit');
-            Route::post('/admin/pengumuman/pesan/update', 'PengumumanController@update')
-                ->name('pengumuman.pesan-update');
-            Route::get('/admin/pengumuman/pesan/hapus/{id}', 'PengumumanController@destroy');
+                Route::get('/admin/pengumuman', 'PengumumanController@index')
+                    ->name('pengumuman.pengumuman');
+                Route::post('/admin/pengumuman/pesan/add', 'PengumumanController@store')->name('pengumuman.pesan-add');
+                Route::get('/admin/pengumuman/pesan/{id}', 'PengumumanController@edit');
+                Route::post('/admin/pengumuman/pesan/update', 'PengumumanController@update')
+                    ->name('pengumuman.pesan-update');
+                Route::get('/admin/pengumuman/pesan/hapus/{id}', 'PengumumanController@destroy');
             });
-
     });
 
 
 Auth::routes();
 
+Route::get('/verify', 'VerifyController@index')->name('verify');
 Route::get('/home', 'HomeController@index')->name('home');

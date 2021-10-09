@@ -29,14 +29,16 @@ class VerificationControllerAPI extends Controller
      */
     public function verify(Request $request)
     {
-        // ->route('id') gets route user id and getKey() gets current user id() 
-        // do not forget that you must send Authorization header to get the user from the request
-        if ($request->route('id') == $request->user()->getKey() &&
-            $request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
+        $user = User::find($request->route('id'));
 
-        return response()->json('Email verified!');
+        if (!hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
+            throw new AuthorizationException;
+        }
+    
+        if ($user->markEmailAsVerified())
+            event(new Verified($user));
+    
+        return redirect($this->redirectPath())->with('verified', true);
 //        return redirect($this->redirectPath());
     }
 
